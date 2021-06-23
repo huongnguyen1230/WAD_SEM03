@@ -2131,7 +2131,7 @@
     <Content Include="Views\Shared\Admin_layout.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
-    <Content Include="Views\Shared\Asite.cshtml" />
+    <Content Include="Views\Shared\Aside.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Category\Create.cshtml" />
   </ItemGroup>

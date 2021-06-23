@@ -1,0 +1,62 @@
+﻿@{
+    @model Assignment.Models.Brand
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+
+<h2>BRAND</h2>
+<h3>@ViewBag.Message</h3>
+<p>@ViewBag.CurrentTime</p>
+@{
+    // day la noi viet code C#
+    var brands = new string[] { "Dell", "MacBook", "Vivo" };
+}
+<ul>
+    @foreach (var brand1 in brands)
+    {
+        <li>BRAND: @brand1</li>
+
+    }
+</ul>
+<a href="~/Home/About">About us</a>
+<br />
+@Html.ActionLink("Home", "Index", "Home")
+
+<h2>Start Form Login</h2>
+@{Html.BeginForm("Create", "Brand");}
+@Html.Label("Email")
+@Html.TextBox("email")
+<br />
+@Html.Label("Password")
+@Html.Password("password")
+<br />
+@Html.DropDownList("city", new SelectList(new[] { "Hà Nội", "Sài Gòn" }), "Chọn tỉnh/thành phố")
+<br />
+@Html.CheckBox("Remember")@Html.Label("Remember me")
+<br />
+@Html.RadioButton("gender", "male", true) Nam
+<br />
+@Html.RadioButton("gender", "female") Nữ
+<br />
+<button type="submit">Submit</button>
+@{Html.EndForm();}
+<br />
+<h3>Thông tin danh mục</h3>
+<h5>Tên: @Model.Name </h5>
+<h5>Ảnh: @Model.Image </h5>
+<h5>Mô tả: @Model.Description </h5>
+<br />
+<h3>Form Nhập dữ liệu cho Brand</h3>
+<br />
+@{ Html.BeginForm();}
+@Html.ValidationSummary(true)
+@Html.LabelFor(Model => Model.Name)
+@Html.EditorFor(Model => Model.Name)
+@Html.LabelFor(Model => Model.Image)
+@Html.EditorFor(Model => Model.Image)
+@Html.LabelFor(Model => Model.Description)
+@Html.TextAreaFor(Model => Model.Description)
+@{ Html.EndForm();}
+
+
