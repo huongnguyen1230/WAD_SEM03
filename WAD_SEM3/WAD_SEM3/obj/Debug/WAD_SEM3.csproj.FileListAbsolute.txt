@@ -156,3 +156,7 @@ D:\SEM3\WAD_SEM03\WAD_SEM3\WAD_SEM3\obj\Debug\WAD_SEM3.csproj.CoreCompileInputs.
 D:\SEM3\WAD_SEM03\WAD_SEM3\WAD_SEM3\obj\Debug\WAD_SEM3.csproj.CopyComplete
 D:\SEM3\WAD_SEM03\WAD_SEM3\WAD_SEM3\obj\Debug\WAD_SEM3.dll
 D:\SEM3\WAD_SEM03\WAD_SEM3\WAD_SEM3\obj\Debug\WAD_SEM3.pdb
+D:\SEM3\WAD_SEM03\WAD_SEM3\WAD_SEM3\bin\EntityFramework.dll
+D:\SEM3\WAD_SEM03\WAD_SEM3\WAD_SEM3\bin\EntityFramework.SqlServer.dll
+D:\SEM3\WAD_SEM03\WAD_SEM3\WAD_SEM3\bin\EntityFramework.xml
+D:\SEM3\WAD_SEM03\WAD_SEM3\WAD_SEM3\bin\EntityFramework.SqlServer.xml
