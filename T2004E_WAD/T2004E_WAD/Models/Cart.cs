@@ -10,6 +10,7 @@ namespace T2004E_WAD.Models
         private Customer customer;
         private List<CartItem> cartItems;
         private decimal grandTotal;
+
         public Cart()
         {
             cartItems = new List<CartItem>();
@@ -19,7 +20,7 @@ namespace T2004E_WAD.Models
         public decimal GrandTotal { get => grandTotal; set => grandTotal = value; }
         public Customer Customer { get => customer; set => customer = value; }
 
-        public CartItem this[int index] //indexer
+        public CartItem this[int index]  // indexer
         {
             get => CartItems[index];
             set => CartItems[index] = value;
@@ -27,7 +28,7 @@ namespace T2004E_WAD.Models
 
         public bool AddToCart(CartItem item)
         {
-            //kiem tra xem co san pham chua
+            // kiem tra xem co sp chua
             int check = CheckExists(item);
             if (check >= 0)
             {
@@ -37,8 +38,23 @@ namespace T2004E_WAD.Models
             {
                 CartItems.Add(item);
             }
+            CalculateGrandTotal();
             return true;
         }
+
+        public void RemoveItem(int id)
+        {
+            foreach (var item in CartItems)
+            {
+                if (item.Product.Id == id)
+                {
+                    CartItems.Remove(item);
+                    CalculateGrandTotal();
+                    return;
+                }
+            }
+        }
+
         public int CheckExists(CartItem item)
         {
             for (int i = 0; i < CartItems.Count; i++)

@@ -18,6 +18,8 @@ namespace T2004E_WAD.Models
         [Required(ErrorMessage = "Vui lòng nhập mô tả danh mục")]
         public string Description { get; set; }
 
-        
+        public virtual ICollection<Product> Products { get; set; } // giong hasMany
+
+
     }
 }

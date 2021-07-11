@@ -107,10 +107,32 @@ namespace T2004E_WAD.Controllers
             return View();
         }
 
+        public ActionResult RemoveItem(int? id)
+        {
+            try
+            {
+
+                Cart cart = (Cart)Session["Cart"];
+                if (cart == null)
+                {
+                    return HttpNotFound();
+                }
+                cart.RemoveItem((int)id);
+                Session["cart"] = cart;// them session
+            }
+            catch (Exception e)
+            {
+                return HttpNotFound();
+            }
+            return RedirectToAction("Cart");
+        }
+
         // GET: Product/Create
         public ActionResult Create()
         {
             ViewBag.CategoryID = new SelectList(db.Categories, "Id", "Name");
+            ViewBag.BrandID = new SelectList(db.Brands, "Id", "Name");
+
             return View();
         }
 
@@ -119,7 +141,7 @@ namespace T2004E_WAD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Image,Price,Description,CategoryID")] Product product)
+        public ActionResult Create([Bind(Include = "Id,Name,Image,Price,Description,CategoryID,BrandID")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -129,6 +151,8 @@ namespace T2004E_WAD.Controllers
             }
 
             ViewBag.CategoryID = new SelectList(db.Categories, "Id", "Name", product.CategoryID);
+            ViewBag.BrandID = new SelectList(db.Brands, "Id", "Name", product.BrandID);
+
             return View(product);
         }
 
@@ -145,6 +169,7 @@ namespace T2004E_WAD.Controllers
                 return HttpNotFound();
             }
             ViewBag.CategoryID = new SelectList(db.Categories, "Id", "Name", product.CategoryID);
+            ViewBag.BrandID = new SelectList(db.Brands, "Id", "Name", product.BrandID);
             return View(product);
         }
 
@@ -153,7 +178,7 @@ namespace T2004E_WAD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Image,Price,Description,CategoryID")] Product product)
+        public ActionResult Edit([Bind(Include = "Id,Name,Image,Price,Description,CategoryID,BrandID")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -162,6 +187,8 @@ namespace T2004E_WAD.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryID = new SelectList(db.Categories, "Id", "Name", product.CategoryID);
+            ViewBag.BrandID = new SelectList(db.Brands, "Id", "Name", product.BrandID);
+
             return View(product);
         }
 
@@ -198,6 +225,40 @@ namespace T2004E_WAD.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult CheckOut()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CheckOut(Order order)
+        {
+            if (ModelState.IsValid)
+            {
+                var cart = (Cart)Session["cart"];
+                order.GrandTotal = cart.GrandTotal;
+                order.CreatedAt = DateTime.Now;
+                order.Status = 1;
+                db.Orders.Add(order);
+                db.SaveChanges();
+
+                foreach (var item in cart.CartItems)
+                {
+                    OrderItem orderItem = new OrderItem() { OrderID = order.Id, ProductID = item.Product.Id, Qty = item.Quantity, Price = item.Product.Price };
+                    db.OrderItems.Add(orderItem);
+                }
+                db.SaveChanges();
+                Session["cart"] = null;// xoa gio hang
+            }
+
+            return RedirectToAction("CheckOutSuccess");
+        }
+
+        public string CheckOutSuccess()
+        {
+            return "SUCCESSFULL!!";
         }
     }
 }
