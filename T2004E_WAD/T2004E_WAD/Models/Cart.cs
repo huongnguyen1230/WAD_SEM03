@@ -32,7 +32,7 @@ namespace T2004E_WAD.Models
             int check = CheckExists(item);
             if (check >= 0)
             {
-                CartItems[check].Quantity += item.Quantity;
+                CartItems[check].Quantity += item.Quantity; 
             }
             else
             {
@@ -40,19 +40,6 @@ namespace T2004E_WAD.Models
             }
             CalculateGrandTotal();
             return true;
-        }
-
-        public void RemoveItem(int id)
-        {
-            foreach (var item in CartItems)
-            {
-                if (item.Product.Id == id)
-                {
-                    CartItems.Remove(item);
-                    CalculateGrandTotal();
-                    return;
-                }
-            }
         }
 
         public int CheckExists(CartItem item)
@@ -67,7 +54,18 @@ namespace T2004E_WAD.Models
             }
             return -1;
         }
-
+        public void RemoveItem(int id)
+        {
+            foreach (var item in CartItems)
+            {
+                if (item.Product.Id == id)
+                {
+                    CartItems.Remove(item);
+                    CalculateGrandTotal();
+                    return;
+                }
+            }
+        }
         public void CalculateGrandTotal()
         {
             decimal grand = 0;

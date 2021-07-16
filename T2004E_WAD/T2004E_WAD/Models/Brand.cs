@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace T2004E_WAD.Models
 {
     public class Brand
-    {
+    { //thuoc tinh co ban cua doi tuong
         [Key]
         public int Id { get; set; }
         [Required]

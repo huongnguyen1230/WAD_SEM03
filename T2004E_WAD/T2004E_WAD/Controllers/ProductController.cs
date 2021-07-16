@@ -37,7 +37,7 @@ namespace T2004E_WAD.Controllers
             }
             switch (sort)
             {
-                case "asc": products = products.OrderBy(p => p.Name); break;
+                case "asc": products = products.OrderBy(p => p.Name); break; 
                 case "desc": products = products.OrderByDescending(p => p.Name); break;
             }
             // loc theo category
@@ -65,7 +65,7 @@ namespace T2004E_WAD.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
+            Product product = db.Products.Find(id); //gọi products theo id trong db
             if (product == null)
             {
                 return HttpNotFound();
@@ -145,8 +145,8 @@ namespace T2004E_WAD.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Products.Add(product);
-                db.SaveChanges();
+                db.Products.Add(product);//lưu vào db tạm thời đối tượng vừa subbmit là product
+                db.SaveChanges(); //lưu db
                 return RedirectToAction("Index");
             }
 
@@ -155,7 +155,7 @@ namespace T2004E_WAD.Controllers
 
             return View(product);
         }
-
+        //hàm create lấy dữ liệu id, name...
         // GET: Product/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -182,7 +182,7 @@ namespace T2004E_WAD.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(product).State = EntityState.Modified;
+                db.Entry(product).State = EntityState.Modified; //trạng thái của db là có cập nhật
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

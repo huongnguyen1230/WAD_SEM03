@@ -53,8 +53,8 @@
 
 <h2>Form Nhập dữ liệu cho Category</h2>
 @{ Html.BeginForm();}
-    @Html.ValidationSummary(true)
-    @Html.LabelFor(Model => Model.Name)
+    @Html.ValidationSummary(true) //bat buoc phai co valid
+    @Html.LabelFor(Model => Model.Name) //truyen du lieu model vao
     @Html.EditorFor(Model => Model.Name)
     @Html.LabelFor(Model => Model.Image)
     @Html.EditorFor(Model => Model.Image)

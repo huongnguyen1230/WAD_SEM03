@@ -7,9 +7,9 @@
 }
 
 <h2>Index</h2>
-@{ Html.BeginForm("Index", "Product", FormMethod.Get);}
+@{ Html.BeginForm("Index", "Product", FormMethod.Get);} 
     @Html.TextBox("search")
-<select name="categoryId" class="form-control">
+<select name="categoryId" class="form-control"> 
     <option value="">Select category</option>
     @foreach (T2004E_WAD.Models.Category item in Model.Categories)
     {
@@ -20,8 +20,8 @@
 @{ Html.EndForm();}
 <p>
     @Html.ActionLink("Create New", "Create")
-    @Html.ActionLink("Sort by Name ASC", "Index", new { sortOrder = "asc" })
-    @Html.ActionLink("Sort by Name DESC", "Index", new { sortOrder = "desc" })
+    @Html.ActionLink("Sort by Name ASC", "Index", new { sortOrder = "asc" }) 
+    @Html.ActionLink("Sort by Name DESC", "Index", new { sortOrder = "desc" }) 
 </p>
 
 <table class="table">

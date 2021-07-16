@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using T2004E_WAD.Context;
 using T2004E_WAD.Models;
 using System.Dynamic;
+using System.IO;
 
 namespace T2004E_WAD.Controllers
 {
@@ -29,7 +30,7 @@ namespace T2004E_WAD.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
+            Category category = db.Categories.Find(id); //class Category co bien la category
             if (category == null)
             {
                 return HttpNotFound();
@@ -51,8 +52,20 @@ namespace T2004E_WAD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Image,Description")] Category category)
+        public ActionResult Create([Bind(Include = "Id,Name,Description")] Category category, HttpPostedFileBase Image) //action method, tab cuoi cung trong url
         {
+            String categoryImage = "default.png";
+            //upload file len thu muc upload
+            //luu ten file vao categoryImage
+            if(Image != null)
+            {
+                string fileName = Path.GetFileName(Image.FileName);
+                string path = Path.Combine(Server.MapPath("~/Uploads"), fileName);
+                Image.SaveAs(path);// luu file xong
+                categoryImage = "Uploads/" + fileName;
+            }
+            category.Image = categoryImage;
+
             if (ModelState.IsValid)
             {
                 db.Categories.Add(category);
@@ -81,11 +94,12 @@ namespace T2004E_WAD.Controllers
         // POST: Category/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost] //phương thức post
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Image,Description")] Category category)
+        public ActionResult Edit([Bind(Include = "Id,Name,Image,Description")] Category category) //category là đối tượng nhận được khi submit form edit lên, 
+                                                                                                  //controller sẽ nhận view models đó
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) //nếu isvalid thành công
             {
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
